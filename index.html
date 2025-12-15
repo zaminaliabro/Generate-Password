@@ -2,23 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=, initial-scale=1.0" />
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <select id="length">
-      <option value="8">8</option>
-      <option value="10">10</option>
-      <option value="12">12</option>
-    </select>
-
-    <select id="type">
-      <option value="all">All</option>
-      <option value="letters">Letters</option>
-      <option value="numbers">Numbers</option>
-    </select>
-
     <button id="generate">Generate Password</button>
+
+    <div class="modal" id="modal">
+      <div class="modal-box">
+        <h3>Please choose options:</h3>
+
+        <label><input type="checkbox" id="letters" checked /> Letters</label>
+        <label
+          ><input type="checkbox" id="capatalletters" checked /> capatal
+          letters</label
+        >
+        <label><input type="checkbox" id="numbers" /> Numbers</label>
+        <label><input type="checkbox" id="symbols" /> Symbols</label>
+
+        <div class="actions">
+          <button id="cancel">Cancel</button>
+          <button id="ok">OK</button>
+        </div>
+      </div>
+    </div>
 
     <p id="result"></p>
 

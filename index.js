@@ -1,29 +1,53 @@
-const lengthSelect = document.getElementById("length");
-const typeSelect = document.getElementById("type");
-const result = document.getElementById("result");
+const modal = document.getElementById("modal");
 const btn = document.getElementById("generate");
+const ok = document.getElementById("ok");
+const cancel = document.getElementById("cancel");
+const result = document.getElementById("result");
 
-btn.addEventListener("click", () => {
-  const length = Number(lengthSelect.value);
-  const type = typeSelect.value;
+function customPrompt() {
+  return new Promise((resolve, reject) => {
+    modal.style.display = "flex";
 
-  let chars = "";
+    ok.onclick = () => {
+      resolve({
+        letters: document.getElementById("letters").checked,
+        numbers: document.getElementById("numbers").checked,
+        symbols: document.getElementById("symbols").checked,
+        capatalletters: document.getElementById("capatalletters").checked,
+      });
+      modal.style.display = "none";
+    };
 
-  if (type === "letters") {
-    chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  } else if (type === "numbers") {
-    chars = "0123456789";
-  } else {
-    chars =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    cancel.onclick = () => {
+      modal.style.display = "none";
+      reject();
+    };
+  });
+}
+
+btn.addEventListener("click", async () => {
+  try {
+    const options = await customPrompt();
+
+    let chars = "";
+    if (options.letters) chars += "abcdefghijklmnopqrstuvwxyz";
+    if (options.capatalletters) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    if (options.numbers) chars += "0123456789";
+    if (options.symbols) chars += "!@#$%^&*";
+
+    if (!chars) {
+      alert("Please select at least one option");
+      return;
+    }
+
+    let password = "";
+    for (let i = 0; i < 10; i++) {
+      password += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    result.textContent = password;
+  } catch {
+    alert("Cancelled");
   }
-
-  let password = "";
-
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * chars.length);
-    password += chars[randomIndex];
-  }
-
-  result.textContent = password;
 });
