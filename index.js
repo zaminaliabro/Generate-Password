@@ -15,7 +15,7 @@ function customPrompt() {
         symbols: document.getElementById("symbols").checked,
         capatalletters: document.getElementById("capatalletters").checked,
       });
-      modal.style.display = "none";
+      modal.style.display = "none"; 
     };
 
     cancel.onclick = () => {
